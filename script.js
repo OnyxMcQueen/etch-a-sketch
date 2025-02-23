@@ -1,5 +1,6 @@
+const gridContainer = document.querySelector('#container');
+
 function generateGrid(sizeofOneSide = 16){
-  const gridContainer = document.querySelector('#container');
 
   const amountOfSquares = sizeofOneSide * sizeofOneSide;
   const squareSize = calculateSizeOfSquare(sizeofOneSide, 956);
@@ -31,3 +32,10 @@ function rgbGenerator(){
 document.addEventListener('DOMContentLoaded', () => {
   generateGrid();
 });
+
+// Add event listener to the container to listen for mouseover movements on the squares
+gridContainer.addEventListener('mouseover', (e) => {
+  if(e.target.classList.contains('square') && e.target.style.backgroundColor === ''){
+    e.target.style.backgroundColor = rgbGenerator();
+  }
+})
