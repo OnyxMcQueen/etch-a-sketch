@@ -39,6 +39,10 @@ function resetGridColor() {
   })
 }
 
+function clearGrid(){
+  gridContainer.innerHTML = '';
+}
+
 // Run the function after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
   generateGrid();
