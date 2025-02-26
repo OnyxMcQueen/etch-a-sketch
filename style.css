@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+#title-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px auto;
+}
+
+#main-title {
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+}
+
 #container {
   display: flex;
   flex-wrap: wrap;
