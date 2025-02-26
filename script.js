@@ -1,5 +1,6 @@
 const gridContainer = document.querySelector('#container');
 const resetButton = document.querySelector('#reset-button');
+const changeGridSizeButton = document.querySelector('#change-size-button');
 
 function generateGrid(sizeofOneSide = 16){
 
@@ -43,6 +44,26 @@ function clearGrid(){
   gridContainer.innerHTML = '';
 }
 
+function validateUserInput(input){
+  if(input === ''){
+    return false;
+  }
+
+  if(!isNaN(input) && (input >= 2 && input <= 100)){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isItNull(userInput){
+  if(userInput === null){
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // Run the function after the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
   generateGrid();
@@ -57,4 +78,42 @@ gridContainer.addEventListener('mouseover', (e) => {
 // Event listener for reset button, to reset all square colors
 resetButton.addEventListener('click', (e) => {
   resetGridColor();
+})
+
+// Event listener to prompt user for customizable grid size
+changeGridSizeButton.addEventListener('click', (e) => {
+  let userInput = prompt('How many tiles should be in each row/column of the grid? (2–100)');
+
+  if(isItNull(userInput)){
+    return;
+  }
+
+  userInput = Number(userInput);
+
+  if(validateUserInput(userInput)){
+    clearGrid();
+    generateGrid(userInput);
+  } else {
+    let retryAttempt = prompt('How many tiles should be in each row/column of the grid? (2–100)');
+
+    if(isItNull(retryAttempt)){
+      return;
+    }
+
+    retryAttempt = Number(retryAttempt);
+
+    while(!validateUserInput(retryAttempt)){
+      retryAttempt = prompt('How many tiles should be in each row/column of the grid? (2–100)');
+
+      if(isItNull(retryAttempt)){
+        return;
+      }
+
+      retryAttempt = Number(retryAttempt); 
+    }
+
+    clearGrid();
+    generateGrid(retryAttempt);
+  }
+
 })
