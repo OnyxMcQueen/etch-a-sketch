@@ -2,6 +2,8 @@ const gridContainer = document.querySelector('#container');
 const resetButton = document.querySelector('#reset-button');
 const changeGridSizeButton = document.querySelector('#change-size-button');
 
+let isMousePressed;
+
 function generateGrid(sizeofOneSide = 16){
 
   const amountOfSquares = sizeofOneSide * sizeofOneSide;
@@ -69,12 +71,32 @@ document.addEventListener('DOMContentLoaded', () => {
   generateGrid();
 });
 
-// Add event listener to the container to listen for mouseover movements on the squares
-gridContainer.addEventListener('mouseover', (e) => {
-  if(e.target.classList.contains('square') && e.target.style.backgroundColor === ''){
-    e.target.style.backgroundColor = rgbGenerator();
+// When the user clicks the mouse and holds it will start coloring.
+gridContainer.addEventListener('mousedown', (e) => {
+  if(e.button === 0){
+    e.preventDefault();
+    isMousePressed = true;
+    if(e.target.classList.contains('square') && e.target.style.backgroundColor === ''){
+      e.target.style.backgroundColor = rgbGenerator();
+    }
   }
 })
+
+// Add event listener to the container to listen for mouseover movements on the squares
+gridContainer.addEventListener('mouseover', (e) => {
+  if(isMousePressed){
+    if(e.target.classList.contains('square') && e.target.style.backgroundColor === ''){
+      e.target.style.backgroundColor = rgbGenerator();
+    }
+  }
+})
+
+// Ensure that when the user releases the mouse button, it will stop coloring squares. 
+// Even if released outside grid.
+document.addEventListener('mouseup', (e) => {
+  isMousePressed = false;
+})
+
 // Event listener for reset button, to reset all square colors
 resetButton.addEventListener('click', (e) => {
   resetGridColor();
